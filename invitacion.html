@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Invitación — [NOMBRE] & [NOMBRE]</title>
+
+<!-- Tipografía elegante -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#faf8f6;
+    --accent:#5b3a46;        /* color principal */
+    --muted:#7a6f72;         /* texto secundario */
+    --card:#ffffff;
+    --glass: rgba(255,255,255,0.6);
+    --radius:20px;
+  }
+
+  /* Reset minimal */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg,var(--bg), #ffffff 60%);
+    color:var(--accent);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+  }
+
+  /* Contenedor central */
+  .card{
+    width:min(920px, 96vw);
+    background: linear-gradient(180deg,var(--card), rgba(255,255,255,0.98));
+    border-radius:var(--radius);
+    box-shadow: 0 12px 40px rgba(90,70,80,0.08);
+    overflow:hidden;
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    min-height: 520px;
+  }
+
+  /* Panel izquierdo: texto principal */
+  .left{
+    padding:56px 48px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:18px;
+  }
+
+  .logo{
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    letter-spacing:2px;
+    color:var(--accent);
+    opacity:0.95;
+  }
+
+  h1{
+    font-family: "Playfair Display", serif;
+    font-size: clamp(28px, 4.2vw, 44px);
+    color:var(--accent);
+    line-height:1.02;
+    margin-top:6px;
+    font-weight:600;
+    transform: translateY(10px);
+    opacity:0;
+    animation: rise 900ms ease forwards;
+  }
+
+  .subtitle{
+    color:var(--muted);
+    margin-top:6px;
+    font-size:16px;
+    opacity:0;
+    transform: translateY(10px);
+    animation: rise 900ms ease forwards;
+    animation-delay: 160ms;
+  }
+
+  .meta{
+    display:flex;
+    gap:16px;
+    margin-top:18px;
+    align-items:center;
+    color:var(--muted);
+    font-size:15px;
+    opacity:0;
+    transform: translateY(10px);
+    animation: rise 900ms ease forwards;
+    animation-delay: 320ms;
+  }
+
+  .meta .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:0.18;margin-right:8px;
+  }
+
+  /* Botones */
+  .actions{
+    margin-top:28px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    opacity:0;
+    transform: translateY(10px);
+    animation: rise 900ms ease forwards;
+    animation-delay: 480ms;
+  }
+
+  .btn{
+    padding:12px 18px;
+    border-radius:12px;
+    border:1px solid rgba(91,58,70,0.08);
+    background:transparent;
+    color:var(--accent);
+    font-weight:600;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    gap:10px;
+    align-items:center;
+    transition: all 180ms ease;
+    box-shadow:none;
+  }
+  .btn:hover{ transform: translateY(-3px); box-shadow: 0 8px 20px rgba(91,58,70,0.06) }
+
+  .primary{
+    background: linear-gradient(90deg,var(--accent), #7b4d56);
+    color:white;
+    border: none;
+  }
+
+  /* Panel derecho: imagen / detalles */
+  .right{
+    background:
+      radial-gradient( circle at 10% 10%, rgba(91,58,70,0.03), transparent 8%),
+      linear-gradient(180deg, rgba(245,242,241,0.6), rgba(255,255,255,0.6));
+    padding:36px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:18px;
+  }
+
+  .card-inner{
+    background: var(--glass);
+    border-radius:14px;
+    padding:18px;
+    backdrop-filter: blur(6px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+
+  .venue{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .venue .icon{
+    width:56px;height:56px;border-radius:10px;background:linear-gradient(180deg,#fff, #f7f5f6);
+    display:grid;place-items:center;font-size:20px;color:var(--accent);
+    box-shadow: 0 6px 18px rgba(91,58,70,0.04);
+  }
+  .venue p{font-size:14px;color:var(--muted);}
+
+  /* Contador */
+  .countdown{
+    margin-top:8px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .countdown .item{
+    background:white;border-radius:10px;padding:8px 12px;text-align:center;min-width:66px;
+    box-shadow: 0 8px 20px rgba(91,58,70,0.04);
+  }
+  .countdown .num{font-weight:700;color:var(--accent);font-size:20px}
+  .countdown .label{font-size:12px;color:var(--muted)}
+
+  /* Música toggle */
+  .music-toggle{display:flex;gap:12px;align-items:center;margin-top:10px}
+  .music-toggle input{width:36px;height:20px}
+
+  /* Animación discreta de fondo (líneas florales) */
+  .art{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:0.55;
+    mix-blend-mode: multiply;
+  }
+
+  /* Pequeñas animaciones de entrada */
+  @keyframes rise {
+    from {opacity:0; transform:translateY(18px) scale(0.995)}
+    to {opacity:1; transform:translateY(0) scale(1)}
+  }
+
+  /* Responsive */
+  @media (max-width:880px){
+    .card{grid-template-columns:1fr; padding:18px}
+    .right{order:2}
+    .left{order:1;padding:28px}
+  }
+
+  footer.note{
+    font-size:12px;color:var(--muted);text-align:center;padding:14px 0;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- SVG decorativo en fondo -->
+<svg class="art" width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0" stop-color="#f6e9e9" stop-opacity="1"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(-80,-60)">
+    <ellipse cx="800" cy="420" rx="420" ry="280" fill="url(#g1)"></ellipse>
+    <path d="M120 300 C 250 50, 600 50, 740 300 S 980 600, 1200 300" stroke="rgba(91,58,70,0.04)" stroke-width="1.5" fill="none"></path>
+  </g>
+</svg>
+
+<main class="card" role="main" aria-labelledby="title">
+  <section class="left" aria-label="Invitación principal">
+    <div class="logo">Invitación</div>
+
+    <h1 id="title">[NOMBRE] &amp; [NOMBRE]</h1>
+
+    <p class="subtitle">Junto a nuestras familias, nos gustaría compartir contigo el día en que comenzamos nuestra vida juntos.</p>
+
+    <div class="meta" aria-hidden>
+      <div style="display:flex;align-items:center">
+        <div class="dot" aria-hidden></div>
+        <div>12 de Julio de 2026 · 18:30</div>
+      </div>
+      <div style="display:flex;align-items:center">
+        <div class="dot" aria-hidden></div>
+        <div>Finca El Encanto, Córdoba</div>
+      </div>
+    </div>
+
+    <div class="actions" role="group" aria-label="Acciones de invitación">
+      <!-- RSVP abre mailto con asunto y cuerpo prellenado -->
+      <a class="btn primary" id="rsvp" href="mailto:?subject=Confirmación%20de%20asistencia%20-%20[NOMBRE]%20&body=Hola%20[NOMBRE%20de%20los%20anfitriones]%2C%0A%0AMe%20encantar%C3%ADa%20confirmar%20mi%20asistencia.%0A%0ANombre%20de%20los%20invitados%3A%0A%0ATeléfono%3A%0A%0A%0AGracias%20y%20felicidades!" aria-label="Confirmar asistencia (RSVP)">Confirmar asistencia</a>
+
+      <!-- Ver mapa (reemplaza el enlace por el de Google Maps real) -->
+      <a class="btn" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Ver mapa</a>
+
+      <button class="btn" id="toggleMusic" title="Activar / desactivar música">Música</button>
+    </div>
+
+    <footer class="note">Traje: Cóctel · Invitación personal e intransferible</footer>
+  </section>
+
+  <aside class="right" aria-label="Detalles y cuenta atrás">
+    <div class="card-inner" role="region" aria-labelledby="detailsTitle">
+      <h3 id="detailsTitle" style="font-family:Playfair Display; margin-bottom:10px; color:var(--accent)">Detalles</h3>
+
+      <div class="venue" style="margin-bottom:8px">
+        <div class="icon" aria-hidden>📍</div>
+        <div>
+          <strong style="display:block;color:var(--accent)">Finca El Encanto</strong>
+          <p>Ctra. de las Flores, 23 · Córdoba</p>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <strong style="display:block;color:var(--accent)">Ceremonia</strong>
+        <p style="color:var(--muted);font-size:14px;margin-top:6px">18:30 — Jardín principal</p>
+      </div>
+
+      <div style="margin-top:12px">
+        <strong style="display:block;color:var(--accent)">Banquete</strong>
+        <p style="color:var(--muted);font-size:14px;margin-top:6px">20:00 — Salón La Luna</p>
+      </div>
+
+      <div class="countdown" id="countdown" style="margin-top:18px" aria-live="polite">
+        <div class="item"><div class="num" id="days">--</div><div class="label">Días</div></div>
+        <div class="item"><div class="num" id="hours">--</div><div class="label">Hrs</div></div>
+        <div class="item"><div class="num" id="minutes">--</div><div class="label">Min</div></div>
+        <div class="item"><div class="num" id="seconds">--</div><div class="label">Seg</div></div>
+      </div>
+
+      <div class="music-toggle">
+        <label style="font-size:13px;color:var(--muted)">Reproducir canción</label>
+        <!-- control vía botón principal -->
+      </div>
+    </div>
+  </aside>
+</main>
+
+<!-- Pequeño pie con créditos -->
+<p style="text-align:center;margin-top:16px;color:var(--muted);font-size:13px">Puedes personalizar nombres, fecha y enlaces en el código.</p>
+
+<!-- Música (opcional): reemplaza src por tu archivo mp3 si quieres -->
+<audio id="bgMusic" loop src="" aria-hidden="true"></audio>
+
+<script>
+  // ---------- Contador -------------
+  // Cambia la fecha objetivo aquí (YYYY, M-1, D, H, M, S) - Nota: mes base 0 en JS
+  const target = new Date(2026, 6, 12, 18, 30, 0); // 12 Jul 2026 18:30 -> mes 6 (Julio)
+  const elDays = document.getElementById('days');
+  const elHours = document.getElementById('hours');
+  const elMins = document.getElementById('minutes');
+  const elSecs = document.getElementById('seconds');
+
+  function updateCountdown(){
+    const now = new Date();
+    const diff = Math.max(0, target - now);
+    const s = Math.floor(diff/1000) % 60;
+    const m = Math.floor(diff/1000/60) % 60;
+    const h = Math.floor(diff/1000/3600) % 24;
+    const d = Math.floor(diff/1000/3600/24);
+    elDays.textContent = String(d).padStart(2,'0');
+    elHours.textContent = String(h).padStart(2,'0');
+    elMins.textContent = String(m).padStart(2,'0');
+    elSecs.textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ---------- Música toggle (botón) -------------
+  const musicBtn = document.getElementById('toggleMusic');
+  const audio = document.getElementById('bgMusic');
+  // Si quieres usar una canción, pega la URL en audio.src (ej: '/media/song.mp3' o URL externa)
+  // audio.src = 'ruta/a/tu-cancion.mp3';
+
+  let playing=false;
+  musicBtn.addEventListener('click', () => {
+    if(!audio.src){
+      // No hay canción definida: sugerir al usuario cómo añadirla
+      alert('No hay canción definida. Añade la ruta a la canción en el atributo audio.src del archivo HTML para activarla.');
+      return;
+    }
+    if(playing){ audio.pause(); musicBtn.classList.remove('active'); playing=false; musicBtn.textContent='Música'; }
+    else { audio.play(); musicBtn.classList.add('active'); playing=true; musicBtn.textContent='Pausa'; }
+  });
+
+  // ---------- RSVP: mejorar mailto con datos (opcional) -------------
+  // El enlace inicial ya abre el correo. Si quieres, podemos capturar un formulario y enviar por API.
+
+  // ---------- Sugerencia: reemplazos rápidos ----------
+  // Puedes programáticamente cambiar texto con JS si quieres personalización:
+  // document.getElementById('title').textContent = 'Ana & Carlos';
+  // document.querySelector('.subtitle').textContent = 'Nos casamos. Acompáñanos.';
+</script>
+
+</body>
+</html>
